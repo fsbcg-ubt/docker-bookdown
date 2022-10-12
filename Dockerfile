@@ -7,7 +7,8 @@ RUN apt-get update && \
     libssl-dev \
     libxml2-dev
 
-RUN R -e "install.packages('bookdown',dependencies=TRUE)"
+ARG BOOKDOWN_VERSION=0.29
+RUN R -e "install.packages('bookdown',version='${BOOKDOWN_VERSION}',dependencies=TRUE)"
 
 ARG PANDOC_VERSION=2.19.2
 # Download the specified pandoc version. (see: https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8)
