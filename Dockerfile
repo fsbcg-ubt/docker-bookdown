@@ -1,4 +1,22 @@
-FROM r-base:4.2.1
+FROM r-base@sha256:8c5f13cb4700e18460efca2d4a6339b82f5cbae5a53efde0c0621dfe800086a4
+
+ARG BOOKDOWN_VERSION=0.29
+ARG PANDOC_VERSION=2.19.2
+
+LABEL org.opencontainers.image.title="Docker Bookdown Image"
+LABEL org.opencontainers.image.description="Docker Image to render Bookdown projects with Pandoc."
+LABEL org.opencontainers.image.authors="Martin Bens <martin.bens@uni-bayreuth.de>"
+
+LABEL org.opencontainers.image.source="https://github.com/fsbcg-ubt/docker-bookdown"
+LABEL org.opencontainers.image.version="0.2.1"
+LABEL org.opencontainers.image.licenses="MIT"
+
+LABEL org.opencontainers.image.base.name="registry.hub.docker.com/r-base"
+LABEL org.opencontainers.image.base.digest="sha256:8c5f13cb4700e18460efca2d4a6339b82f5cbae5a53efde0c0621dfe800086a4"
+
+LABEL maintainer="Martin Bens <martin.bens@uni-bayreuth.de>"
+LABEL bookdown_version="${BOOKDOWN_VERSION}"
+LABEL pandoc_version="${PANDOC_VERSION}"
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -7,10 +25,8 @@ RUN apt-get update && \
     libssl-dev \
     libxml2-dev
 
-ARG BOOKDOWN_VERSION=0.29
 RUN R -e "install.packages('bookdown',version='${BOOKDOWN_VERSION}',dependencies=TRUE)"
 
-ARG PANDOC_VERSION=2.19.2
 # Download the specified pandoc version. (see: https://gist.github.com/steinwaywhw/a4cd19cda655b8249d908261a62687f8)
 RUN curl -s https://api.github.com/repos/jgm/pandoc/releases/tags/${PANDOC_VERSION} | \
     grep "browser_download_url.*amd64.deb" | \
