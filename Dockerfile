@@ -2,6 +2,8 @@ FROM r-base@sha256:8c5f13cb4700e18460efca2d4a6339b82f5cbae5a53efde0c0621dfe80008
 
 ARG BOOKDOWN_VERSION=0.29
 ARG PANDOC_VERSION=2.19.2
+ARG TINYTEX_VERSION=2022.10
+ARG R_TINYTEX_VERSION=0.42
 
 LABEL org.opencontainers.image.title="Docker Bookdown Image"
 LABEL org.opencontainers.image.description="Docker Image to render Bookdown projects with Pandoc."
@@ -17,6 +19,8 @@ LABEL org.opencontainers.image.base.digest="sha256:8c5f13cb4700e18460efca2d4a633
 LABEL maintainer="Martin Bens <martin.bens@uni-bayreuth.de>"
 LABEL bookdown_version="${BOOKDOWN_VERSION}"
 LABEL pandoc_version="${PANDOC_VERSION}"
+LABEL tinytex_version="${TINYTEX_VERSION}"
+LABEL r_tinytex_version="${R_TINYTEX_VERSION}"
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -34,6 +38,10 @@ RUN curl -s https://api.github.com/repos/jgm/pandoc/releases/tags/${PANDOC_VERSI
     tr -d \" | \
     wget -qi - && \
     dpkg -i pandoc-*.deb
+
+# Install TinyText for PDF books.
+RUN R -e "install.packages('tinytex',version='${R_TINYTEX_VERSION}',dependencies=TRUE)" && \
+    R -e "tinytex::install_tinytex(force=TRUE,version='${TINYTEX_VERSION}')"
 
 RUN mkdir /book
 VOLUME /book
