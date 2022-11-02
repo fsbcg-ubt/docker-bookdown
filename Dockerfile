@@ -1,4 +1,4 @@
-FROM r-base@sha256:8c5f13cb4700e18460efca2d4a6339b82f5cbae5a53efde0c0621dfe800086a4
+FROM r-base@sha256:94ba89c4503af7c69dca11e855c24f30af8e21c43399d664a68ef8ae05a9f5a0
 
 ARG BOOKDOWN_VERSION=0.29
 ARG PANDOC_VERSION=2.19.2
@@ -14,7 +14,7 @@ LABEL org.opencontainers.image.version="0.3.0"
 LABEL org.opencontainers.image.licenses="MIT"
 
 LABEL org.opencontainers.image.base.name="registry.hub.docker.com/r-base"
-LABEL org.opencontainers.image.base.digest="sha256:8c5f13cb4700e18460efca2d4a6339b82f5cbae5a53efde0c0621dfe800086a4"
+LABEL org.opencontainers.image.base.digest="sha256:94ba89c4503af7c69dca11e855c24f30af8e21c43399d664a68ef8ae05a9f5a0"
 
 LABEL maintainer="Martin Bens <martin.bens@uni-bayreuth.de>"
 LABEL bookdown_version="${BOOKDOWN_VERSION}"
