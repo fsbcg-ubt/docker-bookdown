@@ -3,7 +3,7 @@ FROM r-base@sha256:d48acc908bb73ab844c049ac3b83dd6ced3647eb16dadcc3dad20abab4e57
 ARG BOOKDOWN_VERSION=0.40
 ARG PANDOC_VERSION=3.3
 ARG TINYTEX_VERSION=2024.07.03
-ARG R_TINYTEX_VERSION=0.42
+ARG R_TINYTEX_VERSION=0.52
 
 LABEL org.opencontainers.image.title="Docker Bookdown Image"
 LABEL org.opencontainers.image.description="Docker Image to render Bookdown projects with Pandoc."
