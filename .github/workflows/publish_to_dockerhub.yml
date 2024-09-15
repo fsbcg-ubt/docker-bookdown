@@ -24,7 +24,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@70b2cdc6480c1a8b86edf1777157f8f437de2166
         with:
-          images: ghcr.io/fsbcg-ubt/${{ github.repository }}
+          images: ghcr.io/${{ github.repository }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@5cd11c3a4ced054e52742c5fd54dca954e0edd85
