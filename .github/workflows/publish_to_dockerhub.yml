@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@6d193bf28034eafb982f37bd894289fe649468fc
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
@@ -22,12 +22,12 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81
+        uses: docker/metadata-action@70b2cdc6480c1a8b86edf1777157f8f437de2166
         with:
           images: ghcr.io/fsbcg-ubt/${{ github.repository }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@5176d81f87c23d6fc96624dfdbcd9f3830bbe445
+        uses: docker/build-push-action@5cd11c3a4ced054e52742c5fd54dca954e0edd85
         with:
           context: .
           file: ./Dockerfile
