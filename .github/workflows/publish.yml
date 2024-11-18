@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@cbb722410c2e876e24abbe8de2cc27693e501dcb
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@06895751d15a223ec091bea144ad5c7f50d228d0
+        uses: docker/login-action@7ca345011ac4304463197fac0e56eab1bc7e6af0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -22,7 +22,7 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@0de3687b53cd804b63dd87819f7bda043569ce4a
+        uses: docker/metadata-action@44d81d6d2a5a935e1a481942268529623f1f5ccd
         with:
           images: ghcr.io/${{ github.repository }}
 
