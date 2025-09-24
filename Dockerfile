@@ -10,7 +10,7 @@ LABEL org.opencontainers.image.description="Docker Image to render Bookdown proj
 LABEL org.opencontainers.image.authors="Martin Bens <martin.bens@uni-bayreuth.de>"
 
 LABEL org.opencontainers.image.source="https://github.com/fsbcg-ubt/docker-bookdown"
-LABEL org.opencontainers.image.version="0.3.6"
+LABEL org.opencontainers.image.version="0.3.7"
 LABEL org.opencontainers.image.licenses="MIT"
 
 LABEL org.opencontainers.image.base.name="registry.hub.docker.com/r-base"
