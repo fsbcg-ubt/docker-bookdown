@@ -200,23 +200,28 @@ help:
 	@printf "\n"
 	@$(call print,GREEN,Version Management:)
 	@printf "  make check-versions         Check for dependency updates\n"
+	@printf "  make check-renovate-pr      Check for open Renovate PRs\n"
 	@printf "  make update-deps            Update all dependencies to latest\n"
+	@printf "  make update-deps-auto       Auto-detect and update (PR or latest)\n"
 	@printf "  make update-deps-pr PR=123  Update deps via Renovate PR\n"
 	@printf "  make update-<component> V=X Update specific component\n"
 	@printf "\n"
 	@$(call print,GREEN,Release Management:)
 	@printf "  make release                Prepare release information\n"
 	@printf "  make create-release         Create GitHub release\n"
+	@printf "  make create-release-draft   Create draft GitHub release\n"
 	@printf "  make bump-patch/minor/major Bump version number\n"
 	@printf "\n"
 	@$(call print,GREEN,Docker Operations:)
 	@printf "  make build                  Build Docker image locally\n"
 	@printf "  make test                   Test the Docker image\n"
+	@printf "  make shell                  Open shell in container\n"
 	@printf "  make clean                  Clean up Docker images\n"
 	@printf "\n"
 	@$(call print,GREEN,Development:)
 	@printf "  make validate-all           Validate all version formats\n"
 	@printf "  make check-tools            Check required tools\n"
+	@printf "  make show-versions          Show current versions\n"
 
 # =============================================================================
 # Version Checking - Optimized with caching
@@ -428,6 +433,28 @@ bump-major:
 bump-version: bump-patch
 
 # =============================================================================
+# Renovate PR Support
+# =============================================================================
+
+.PHONY: check-renovate-pr
+check-renovate-pr:
+	@$(call print,BLUE,Checking for Renovate PRs...)
+	@gh pr list --state open --search "renovate r-base" --limit 3 || \
+		$(call print,YELLOW,No Renovate PRs found or gh not configured)
+
+.PHONY: update-deps-auto
+update-deps-auto:
+	@$(call print,BLUE,Auto-detecting update mode...)
+	@PR=$$(gh pr list --state open --search 'renovate r-base' --json number -q '.[0].number' 2>/dev/null); \
+	if [ -n "$$PR" ]; then \
+		$(call print,GREEN,Found Renovate PR #$$PR); \
+		$(MAKE) update-deps-pr PR=$$PR; \
+	else \
+		$(call print,YELLOW,No Renovate PR found - updating to latest); \
+		$(MAKE) update-deps-all; \
+	fi
+
+# =============================================================================
 # Release Management - Consolidated
 # =============================================================================
 
@@ -437,9 +464,18 @@ release:
 	@$(call print,BLUE,║      Release Preparation $(CURRENT_IMAGE_VERSION)       ║)
 	@$(call print,BLUE,╚══════════════════════════════════════╝)
 	@echo ""
-	@$(call print,GREEN,Repository Status:)
-	@echo "  Branch: $$(git branch --show-current)"
-	@echo "  Status: $$([ -z "$$(git status --porcelain)" ] && echo 'Clean ✓' || echo 'Uncommitted changes ⚠')"
+	@$(call print,GREEN,Pre-flight Checks:)
+	@BRANCH=$$(git branch --show-current); \
+	if [ "$$BRANCH" != "main" ]; then \
+		$(call print,YELLOW,⚠ Not on main branch (current: $$BRANCH)); \
+	else \
+		$(call print,GREEN,✓ On main branch); \
+	fi
+	@if [ -z "$$(git status --porcelain)" ]; then \
+		$(call print,GREEN,✓ Working directory clean); \
+	else \
+		$(call print,YELLOW,⚠ Uncommitted changes present); \
+	fi
 	@echo "  Latest tag: $$(git describe --tags --abbrev=0 2>/dev/null || echo 'No tags')"
 	@echo ""
 	@$(call print,GREEN,Recent Commits:)
@@ -598,35 +634,8 @@ show-versions:
 	@echo "  Image:       $(CURRENT_IMAGE_VERSION)"
 
 # =============================================================================
-# CI/CD Helpers
-# =============================================================================
-
-.PHONY: ci-check
-ci-check: validate-all check-versions
-	@$(call print,GREEN,✓ CI checks passed)
-
-.PHONY: ci-test
-ci-test: build test
-	@$(call print,GREEN,✓ CI tests passed)
-
-# =============================================================================
 # Advanced Options
 # =============================================================================
-
-.PHONY: rollback
-rollback:
-	@$(call print,BLUE,Rolling back last commit...)
-	@$(call print,YELLOW,Last commit:)
-	@git log -1 --oneline
-	@echo ""
-	@read -p "Are you sure you want to rollback? (y/N) " -n 1 -r; \
-	echo ""; \
-	if [[ $$REPLY =~ ^[Yy]$$ ]]; then \
-		git reset --hard HEAD~1; \
-		$(call print,GREEN,✓ Rolled back successfully); \
-	else \
-		$(call print,YELLOW,Rollback cancelled); \
-	fi
 
 # Interactive menu using gum
 .PHONY: menu
