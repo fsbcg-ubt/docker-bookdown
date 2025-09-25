@@ -196,28 +196,8 @@ docker run --rm -v $(pwd):/book docker-bookdown:local \
 - [ ] All output formats work
 - [ ] Package versions correct
 - [ ] Volume mounting works
-- [ ] Image size < 2GB
 
-## Version Reference
-
-| Component | Version | Format | Source |
-|-----------|---------|--------|--------|
-| R Base | 4.4.2 | Docker digest | Docker Hub |
-| Bookdown | 0.42 | X.XX | CRAN |
-| Pandoc | 3.6.2 | X.X.X | GitHub |
-| TinyTeX | 2025.01 | YYYY.MM | GitHub |
-| R TinyTeX | 0.54 | X.XX | CRAN |
-
-### Version Formats
-```bash
-# Bookdown: X.XX (0.42)
-# Pandoc: X.X.X (3.6.2)
-# TinyTeX: YYYY.MM (2025.01)
-# R TinyTeX: X.XX (0.54)
-# Docker Image: X.X.X (0.3.6)
-```
-
-### Validation Functions
+#### Version Validation Functions
 ```bash
 validate_bookdown() {
   [[ "$1" =~ ^[0-9]+\.[0-9]{2}$ ]] && return 0 || return 1
@@ -239,50 +219,6 @@ validate_r_tinytex() {
 validate_image() {
   [[ "$1" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] && return 0 || return 1
 }
-```
-
-## Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| Build fails | Check Docker daemon, clear cache, verify Dockerfile |
-| Version check fails | Check network, verify API endpoints, check rate limits |
-| Permission denied | Check volume permissions, use user mapping |
-| Package not found | Check CRAN availability, update package database |
-| LaTeX error | Check TinyTeX installation, install missing packages |
-| Out of space | Run `docker system prune -a`, check disk space |
-
-### Debug Commands
-```bash
-docker info
-docker inspect docker-bookdown:local
-docker images | grep bookdown
-docker history docker-bookdown:local
-docker run --rm -it docker-bookdown:local /bin/bash
-docker run --rm docker-bookdown:local R -e "installed.packages()[,1:3]"
-```
-
-## CI/CD
-
-GitHub Actions workflow triggers on:
-- Release creation
-- Manual dispatch
-
-Pipeline:
-1. Build multi-platform image
-2. Tag with version and latest
-3. Push to GitHub Container Registry
-
-### Local CI Simulation
-```bash
-make ci-check
-make ci-test
-
-# Simulate release build
-docker build \
-  --label "org.opencontainers.image.version=test" \
-  --label "org.opencontainers.image.created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-  -t ghcr.io/fsbcg-ubt/docker-bookdown:test .
 ```
 
 For releases, see [MAINTAINERS.md](MAINTAINERS.md#release-procedures).
