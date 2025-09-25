@@ -1,68 +1,77 @@
 # Docker Bookdown Image
 
-The image provided by this repository via DockerHub can be used to render books via bookdown (https://bookdown.org/).
+A Docker image for rendering books via [bookdown](https://bookdown.org/), available through GitHub Container Registry.
 
-Currently, only the rendering of gitbooks for GitHub pages is tested.
+## Quick Start
 
-```bash
-docker run --rm --mount src=$(pwd),target=/book,type=bind ghcr.io/fsbcg-ubt/docker-bookdown:latest Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
-```
-
-The gitbook files are written in a `_book` folder inside the mounted directory.
-
-The support for PDF rendering via LaTex will be added later.
-
-## Development
-
-This project uses a Makefile to manage dependencies and releases. The Docker image packages bookdown, pandoc, and TinyTeX with specific versions tracked in the Dockerfile.
-
-### Prerequisites
-
-Verify required tools:
-```bash
-make check-tools
-```
-
-Required: make, docker, git, jq, awk, sed, grep, curl, column
-Optional enhancements: semver, gum (for better UX)
-
-### Dependency Update Workflow
-
-1. Check for available updates:
-```bash
-make check-versions
-```
-
-2. Update all dependencies to latest versions:
-```bash
-make update-deps
-```
-
-3. Update specific component:
-```bash
-make update-bookdown V=0.45
-make update-pandoc V=3.9.0
-make update-tinytex V=2025.10
-```
-
-4. Handle Renovate PR updates:
-```bash
-make update-deps-pr PR=123
-```
-
-### Release Process
-
-After merging dependency updates:
-```bash
-make release          # View release preparation
-make create-release   # Create GitHub release
-```
-
-### Additional Commands
+Render a bookdown project in your current directory:
 
 ```bash
-make help            # Show all available commands
-make validate-all    # Validate version formats
-make build           # Build Docker image locally
-make test            # Test the built image
+docker run --rm --mount src=$(pwd),target=/book,type=bind \
+  ghcr.io/fsbcg-ubt/docker-bookdown:latest \
+  Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
 ```
+
+The rendered gitbook files will be written to a `_book` folder in your mounted directory.
+
+## Usage Examples
+
+### Render to GitBook Format
+
+```bash
+docker run --rm -v $(pwd):/book ghcr.io/fsbcg-ubt/docker-bookdown:latest \
+  Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
+```
+
+### Render to PDF Format
+
+```bash
+docker run --rm -v $(pwd):/book ghcr.io/fsbcg-ubt/docker-bookdown:latest \
+  Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book')"
+```
+
+### Render to EPUB Format
+
+```bash
+docker run --rm -v $(pwd):/book ghcr.io/fsbcg-ubt/docker-bookdown:latest \
+  Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::epub_book')"
+```
+
+## What's Included
+
+The Docker image includes:
+
+- **R** - Statistical computing environment
+- **Bookdown** - Authoring books with R Markdown
+- **Pandoc** - Universal document converter
+- **TinyTeX** - Lightweight LaTeX distribution for PDF output
+- **R TinyTeX** - R interface to TinyTeX
+
+## Available Versions
+
+- `latest` - Most recent stable release
+- `X.X.X` - Specific version tags (e.g., `0.3.6`)
+
+Pull a specific version:
+
+```bash
+docker pull ghcr.io/fsbcg-ubt/docker-bookdown:0.3.6
+```
+
+## Documentation & Support
+
+- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute to this project
+- **[Development Guide](DEVELOPMENT.md)** - Technical setup and development workflows
+- **[Style Guide](STYLE_GUIDE.md)** - Documentation writing standards
+- **[Issues & Discussions](https://github.com/fsbcg-ubt/docker-bookdown/issues)** - Get help or report problems
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+Built on top of the official [r-base](https://hub.docker.com/_/r-base) Docker image and powered by:
+- The [bookdown](https://github.com/rstudio/bookdown) project by Yihui Xie
+- [Pandoc](https://pandoc.org/) by John MacFarlane
+- [TinyTeX](https://yihui.org/tinytex/) for LaTeX support
