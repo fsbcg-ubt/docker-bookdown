@@ -2,7 +2,7 @@
 
 ## Core Requirements
 
-All changes must include tests and pass existing test suites. Run `make build` and `make test` before submitting. Ensure `make validate-all` passes for version format validation.
+All changes must build successfully. Run `make build` before submitting. Ensure `make validate-all` passes for version format validation.
 
 ## Bug Reports
 
@@ -24,7 +24,7 @@ Create focused PRs with meaningful titles that describe what the change accompli
 - Fork from `main` branch
 - Follow Dockerfile and documentation style guidelines
 - Update documentation for functionality changes
-- Pass all tests locally
+- Build successfully with `make build`
 - Use conventional commit messages
 
 ### What happens next
