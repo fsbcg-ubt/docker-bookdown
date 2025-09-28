@@ -42,7 +42,8 @@ RUN curl -s https://api.github.com/repos/jgm/pandoc/releases/tags/${PANDOC_VERSI
 
 # Install TinyText for PDF books.
 RUN R -e "install.packages('tinytex',version='${R_TINYTEX_VERSION}',dependencies=TRUE)" && \
-    R -e "tinytex::install_tinytex(force=TRUE,version='${TINYTEX_VERSION}')"
+    R -e "tinytex::install_tinytex(force=TRUE,version='${TINYTEX_VERSION}')" && \
+    ln -s /root/bin/xelatex /usr/bin/xelatex
 
 RUN mkdir /book
 VOLUME /book
