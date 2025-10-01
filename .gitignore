@@ -1,0 +1,25 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+./Icon?
+ehthumbs.db
+Thumbs.db
+
+# PhpStorm-Project
+/.idea/
+!/.idea/icon.svg
+/.fleet/
+*.http
+/.run/
+
+# AI/LLM Development Tools
+.claude/
+
+# Local AI/LLM overrides
+*.local.md
+
+# AI/LLM Documentation
+CLAUDE.md
