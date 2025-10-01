@@ -154,7 +154,7 @@ endef
 # Using semver tool for proper semantic version handling
 define bump_version
 @printf "$(COLOR_BLUE)Bumping $(1) version...$(COLOR_RESET)\n"
-@NEW_VERSION=$$(semver bump $(1) $(CURRENT_IMAGE_VERSION)); \
+@NEW_VERSION=$$(semver -i $(1) $(CURRENT_IMAGE_VERSION)); \
 printf "$(COLOR_YELLOW)Bumping version: $(CURRENT_IMAGE_VERSION) → $$NEW_VERSION$(COLOR_RESET)\n"; \
 sed -i.bak "s|org.opencontainers.image.version=\".*\"|org.opencontainers.image.version=\"$$NEW_VERSION\"|" Dockerfile && rm -f Dockerfile.bak; \
 git add Dockerfile && git commit -m "Image version bumped to $$NEW_VERSION."; \
@@ -172,7 +172,7 @@ VERSION="$(2)"; \
 eval $$(echo "$$COMPONENT" | awk -F: '{ \
 print "NAME=" $$1; \
 print "ARG=" $$2; \
-print "PATTERN=" $$3; \
+print "PATTERN=\"" $$3 "\""; \
 print "PREFIX=" $$4; \
 }'); \
 if [ "$$NAME" = "tinytex" ]; then \
@@ -340,7 +340,7 @@ update-deps-all:
 	fi; \
 	$(MAKE) -s update-r-base-digest; \
 	# 1-minute window catches commits from update-r-base-digest above
-	if [ "$$UPDATES_MADE" = "1" ] || [ "$$(git log --oneline -1 --since='1 minute ago' 2>/dev/null | wc -l)" -gt "0" ]; then \
+	@if [ "$$UPDATES_MADE" = "1" ] || [ "$$(git log --oneline -1 --since='1 minute ago' 2>/dev/null | wc -l | tr -d ' ')" -gt "0" ]; then \
 		$(MAKE) -s bump-patch; \
 	fi; \
 	$(call print,GREEN,✓ All dependencies updated successfully!)
