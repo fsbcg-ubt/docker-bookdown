@@ -14,7 +14,7 @@ LABEL org.opencontainers.image.version="0.4.1"
 LABEL org.opencontainers.image.licenses="MIT"
 
 LABEL org.opencontainers.image.base.name="registry.hub.docker.com/r-base"
-LABEL org.opencontainers.image.base.digest="sha256:57499c281ed28c80a4b63955e3e5ced8809853c6767a9badb01b033637279d4e"
+LABEL org.opencontainers.image.base.digest="sha256:fa1972f31def171b83e0911e947ab8b57db143f0fc8a67af4c0d5ac329041646"
 
 LABEL maintainer="Martin Bens <martin.bens@uni-bayreuth.de>"
 LABEL r_version="4.4.2"
