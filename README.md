@@ -71,7 +71,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-Built on top of the official [r-base](https://hub.docker.com/_/r-base) Docker image and powered by:
+Built on top of the [rocker/r-ver](https://hub.docker.com/r/rocker/r-ver) Docker image and powered by:
 - The [bookdown](https://github.com/rstudio/bookdown) project by Yihui Xie
 - [Pandoc](https://pandoc.org/) by John MacFarlane
 - [TinyTeX](https://yihui.org/tinytex/) for LaTeX support
