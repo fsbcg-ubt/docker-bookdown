@@ -32,7 +32,7 @@ MAKEFLAGS += --no-print-directory
 # Format: name:dockerfile_arg:validation_pattern:commit_prefix:version_format:example
 define COMPONENTS
 bookdown:BOOKDOWN_VERSION:^[0-9]+\.[0-9]{2}$$:Bookdown:X.XX:0.42
-pandoc:PANDOC_VERSION:^[0-9]+\.[0-9]+(\.[0-9]+)?$$:Pandoc:X.X or X.X.X:3.8
+pandoc:PANDOC_VERSION:^[0-9]+\.[0-9]+(\.[0-9]+)?(\.[0-9]+)?$$:Pandoc:X.X(.X)(.X):3.8
 r-tinytex:R_TINYTEX_VERSION:^[0-9]+\.[0-9]{2}$$:R TinyTex:X.XX:0.54
 endef
 
@@ -267,7 +267,7 @@ check-versions:
 validate-all:
 	@$(call print,BLUE,Validating all current versions...)
 	@$(call validate,Bookdown,$(CURRENT_BOOKDOWN),^[0-9]+\.[0-9]{2}$$,X.XX)
-	@$(call validate,Pandoc,$(CURRENT_PANDOC),^[0-9]+\.[0-9]+(\.[0-9]+)?$$,X.X or X.X.X)
+	@$(call validate,Pandoc,$(CURRENT_PANDOC),^[0-9]+\.[0-9]+(\.[0-9]+)?(\.[0-9]+)?$$,X.X(.X)(.X))
 	@$(call validate,TinyTeX,$(CURRENT_TINYTEX),^20[0-9]{2}\.(0[1-9]|1[0-2])$$,YYYY.MM)
 	@$(call validate,R TinyTeX,$(CURRENT_R_TINYTEX),^[0-9]+\.[0-9]{2}$$,X.XX)
 	@$(call validate,Docker image,$(CURRENT_IMAGE_VERSION),^[0-9]+\.[0-9]+\.[0-9]+$$,X.X.X)
@@ -319,7 +319,7 @@ update-deps-all:
 	fi; \
 	if [ "$(CURRENT_PANDOC)" != "$$LATEST_PANDOC" ] && [ "$$LATEST_PANDOC" != "error" ]; then \
 		$(call print,YELLOW,Updating Pandoc: $(CURRENT_PANDOC) → $$LATEST_PANDOC); \
-		$(call update_component,pandoc:PANDOC_VERSION:^[0-9]+\.[0-9]+(\.[0-9]+)?$$:Pandoc,$$LATEST_PANDOC); \
+		$(call update_component,pandoc:PANDOC_VERSION:^[0-9]+\.[0-9]+(\.[0-9]+)?(\.[0-9]+)?$$:Pandoc,$$LATEST_PANDOC); \
 		UPDATES_MADE=1; \
 	else \
 		$(call print,GREEN,✓ Pandoc is up to date); \
@@ -363,7 +363,7 @@ endif
 update-pandoc:
 ifdef V
 	@$(call print,BLUE,Updating Pandoc to version $(V)...)
-	@$(call update_component,pandoc:PANDOC_VERSION:^[0-9]+\.[0-9]+(\.[0-9]+)?$$:Pandoc,$(V))
+	@$(call update_component,pandoc:PANDOC_VERSION:^[0-9]+\.[0-9]+(\.[0-9]+)?(\.[0-9]+)?$$:Pandoc,$(V))
 else
 	@$(call print,RED,Error: Please specify version with V=X.X.X)
 	@echo "Example: make update-pandoc V=3.9.0"
