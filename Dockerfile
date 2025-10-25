@@ -1,4 +1,4 @@
-FROM r-base@sha256:fa1972f31def171b83e0911e947ab8b57db143f0fc8a67af4c0d5ac329041646
+FROM rocker/r-ver@sha256:069e05d577c949039ba0c6b4e049240ae2796128077605dbfd6d3074fbc8a6dd
 
 ARG BOOKDOWN_VERSION=0.45
 ARG PANDOC_VERSION=3.8.2.1
@@ -13,8 +13,8 @@ LABEL org.opencontainers.image.source="https://github.com/fsbcg-ubt/docker-bookd
 LABEL org.opencontainers.image.version="0.4.2"
 LABEL org.opencontainers.image.licenses="MIT"
 
-LABEL org.opencontainers.image.base.name="registry.hub.docker.com/r-base"
-LABEL org.opencontainers.image.base.digest="sha256:fa1972f31def171b83e0911e947ab8b57db143f0fc8a67af4c0d5ac329041646"
+LABEL org.opencontainers.image.base.name="registry.hub.docker.com/rocker/r-ver"
+LABEL org.opencontainers.image.base.digest="sha256:069e05d577c949039ba0c6b4e049240ae2796128077605dbfd6d3074fbc8a6dd"
 
 LABEL maintainer="Martin Bens <martin.bens@uni-bayreuth.de>"
 LABEL r_version="4.4.2"
@@ -23,12 +23,14 @@ LABEL pandoc_version="${PANDOC_VERSION}"
 LABEL tinytex_version="${TINYTEX_VERSION}"
 LABEL r_tinytex_version="${R_TINYTEX_VERSION}"
 
+# Packages listed alphabetically
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     curl \
     libcurl4-openssl-dev \
     libssl-dev \
-    libxml2-dev
+    libxml2-dev \
+    wget
 
 RUN R -e "install.packages('bookdown',version='${BOOKDOWN_VERSION}',dependencies=TRUE)"
 
