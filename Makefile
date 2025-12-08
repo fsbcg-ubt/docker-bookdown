@@ -140,7 +140,7 @@ LAST_TAG=$$(git describe --tags --abbrev=0 "$(CURRENT_IMAGE_VERSION)^" 2>/dev/nu
 printf "## What's Changed\n\n### Dependencies Updated\n"; \
 git log --oneline -20 | grep -E "(Bookdown|Pandoc|TinyTex|R TinyTex)" | \
 	sed 's/^[a-f0-9]* /- /' || echo "- No dependency updates"; \
-printf "\n### Docker Image\n- Base image: r-base:latest\n"; \
+printf "\n### Docker Image\n- Base image: rocker/r-ver:latest\n"; \
 printf "- Image version: $(CURRENT_IMAGE_VERSION)\n\n"; \
 if [ -n "$$LAST_TAG" ]; then \
 	printf "**Full Changelog**: https://github.com/fsbcg-ubt/docker-bookdown/compare/$$LAST_TAG...$(CURRENT_IMAGE_VERSION)"; \
@@ -396,9 +396,9 @@ endif
 .PHONY: update-r-base-digest
 update-r-base-digest:
 	@$(call print,BLUE,Updating R base digest...)
-	@docker pull r-base:latest > /dev/null 2>&1 || \
-		($(call print,YELLOW,Warning: Could not pull r-base:latest) && exit 0)
-	@DIGEST=$$(docker inspect r-base:latest 2>/dev/null | \
+	@docker pull rocker/r-ver:latest > /dev/null 2>&1 || \
+		($(call print,YELLOW,Warning: Could not pull rocker/r-ver:latest) && exit 0)
+	@DIGEST=$$(docker inspect rocker/r-ver:latest 2>/dev/null | \
 		jq -r '.[0].RepoDigests[0]' | cut -d'@' -f2); \
 	if [ -n "$$DIGEST" ] && echo "$$DIGEST" | grep -qE '^sha256:[a-f0-9]{64}$$'; then \
 		if [ "$$DIGEST" != "$(CURRENT_R_BASE_DIGEST)" ]; then \
