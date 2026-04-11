@@ -16,7 +16,8 @@ Thumbs.db
 /.run/
 
 # AI/LLM Development Tools
-.claude/
+.claude/*
+!.claude/skills/
 
 # Local AI/LLM overrides
 *.local.md
