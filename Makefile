@@ -173,7 +173,7 @@ eval $$(echo "$$COMPONENT" | awk -F: '{ \
 print "NAME=" $$1; \
 print "ARG=" $$2; \
 print "PATTERN=\"" $$3 "\""; \
-print "PREFIX=" $$4; \
+print "PREFIX=\"" $$4 "\""; \
 }'); \
 if [ "$$NAME" = "tinytex" ]; then \
 VERSION=$$(echo "$$VERSION" | sed 's/^v//'); \
