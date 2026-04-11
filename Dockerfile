@@ -3,7 +3,7 @@ FROM rocker/r-ver@sha256:4a133e71b994ada51a979012f3a5a8f7b1e0d1d48a47a3b2eb494a4
 ARG BOOKDOWN_VERSION=0.46
 ARG PANDOC_VERSION=3.9.0.2
 ARG TINYTEX_VERSION=2026.04
-ARG R_TINYTEX_VERSION=0.57
+ARG R_TINYTEX_VERSION=0.59
 
 LABEL org.opencontainers.image.title="Docker Bookdown Image"
 LABEL org.opencontainers.image.description="Docker Image to render Bookdown projects with Pandoc."
