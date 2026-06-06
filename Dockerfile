@@ -32,7 +32,8 @@ RUN apt-get update && \
     libxml2-dev \
     perl \
     wget \
-    xz-utils
+    xz-utils && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN R -e "install.packages('bookdown',version='${BOOKDOWN_VERSION}',dependencies=TRUE)"
 
