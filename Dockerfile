@@ -1,8 +1,8 @@
-FROM rocker/r-ver@sha256:4a133e71b994ada51a979012f3a5a8f7b1e0d1d48a47a3b2eb494a4ca6af2334
+FROM rocker/r-ver@sha256:024dbea7a5751ceb67caabdf6506a3d7a74470384aa096cde110a4b500e8ee6d
 
 ARG BOOKDOWN_VERSION=0.46
-ARG PANDOC_VERSION=3.9.0.2
-ARG TINYTEX_VERSION=2026.04
+ARG PANDOC_VERSION=3.10
+ARG TINYTEX_VERSION=2026.06
 ARG R_TINYTEX_VERSION=0.59
 
 LABEL org.opencontainers.image.title="Docker Bookdown Image"
@@ -10,11 +10,11 @@ LABEL org.opencontainers.image.description="Docker Image to render Bookdown proj
 LABEL org.opencontainers.image.authors="Martin Bens <martin.bens@uni-bayreuth.de>"
 
 LABEL org.opencontainers.image.source="https://github.com/fsbcg-ubt/docker-bookdown"
-LABEL org.opencontainers.image.version="0.4.5"
+LABEL org.opencontainers.image.version="0.4.6"
 LABEL org.opencontainers.image.licenses="MIT"
 
 LABEL org.opencontainers.image.base.name="registry.hub.docker.com/rocker/r-ver"
-LABEL org.opencontainers.image.base.digest="sha256:4a133e71b994ada51a979012f3a5a8f7b1e0d1d48a47a3b2eb494a4ca6af2334"
+LABEL org.opencontainers.image.base.digest="sha256:024dbea7a5751ceb67caabdf6506a3d7a74470384aa096cde110a4b500e8ee6d"
 
 LABEL maintainer="Martin Bens <martin.bens@uni-bayreuth.de>"
 LABEL r_version="4.4.2"
