@@ -14,7 +14,7 @@ LABEL org.opencontainers.image.version="0.4.5"
 LABEL org.opencontainers.image.licenses="MIT"
 
 LABEL org.opencontainers.image.base.name="registry.hub.docker.com/rocker/r-ver"
-LABEL org.opencontainers.image.base.digest="sha256:4a133e71b994ada51a979012f3a5a8f7b1e0d1d48a47a3b2eb494a4ca6af2334"
+LABEL org.opencontainers.image.base.digest="sha256:024dbea7a5751ceb67caabdf6506a3d7a74470384aa096cde110a4b500e8ee6d"
 
 LABEL maintainer="Martin Bens <martin.bens@uni-bayreuth.de>"
 LABEL r_version="4.4.2"
