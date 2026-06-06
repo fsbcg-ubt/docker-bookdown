@@ -30,7 +30,10 @@ RUN apt-get update && \
     libcurl4-openssl-dev \
     libssl-dev \
     libxml2-dev \
-    wget
+    perl \
+    wget \
+    xz-utils && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN R -e "install.packages('bookdown',version='${BOOKDOWN_VERSION}',dependencies=TRUE)"
 
